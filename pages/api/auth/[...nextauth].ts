@@ -3,9 +3,21 @@ import Credentials from 'next-auth/providers/credentials';
 import prismadb from '../../../lib/prismadb';
 import { compare } from 'bcrypt';
 
+import GithubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
+import {PrismaAdapter} from "@next-auth/prisma-adapter";
+
 // NextAuth configuration for authentication using credentials provider
 export default NextAuth({
     providers: [
+        GithubProvider({
+            clientId: process.env.GITHUB_ID || ' ',
+            clientSecret: process.env.GITHUB_SECRET || ' '
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID || ' ',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || ' '
+        }),
         // Configure the credentials provider for email and password authentication
         Credentials(
             {
@@ -57,6 +69,7 @@ export default NextAuth({
         signIn: '/auth',
     },
     debug: process.env.NODE_ENV === 'development',
+    adapter: PrismaAdapter(prismadb),
     session: {
         strategy: 'jwt'
     },
