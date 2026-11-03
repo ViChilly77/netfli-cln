@@ -1,6 +1,9 @@
 import {NextPageContext} from "next";
 import { getSession,signOut } from "next-auth/react";
 import Navbar from "./components/Navbar";
+import Billboard from "./components/Billboard";
+import MovieList from "./components/MovieList";
+import useMovieList from "../hooks/useMovieList";
 
 
 // Server-side function to check if the user is authenticated 
@@ -23,10 +26,16 @@ if (!session) {
 
 // Functional component for the home page
 export default function Home(){
+  const {data: movies = []} = useMovieList(); // Fetch movie data using the custom hook
     
   return (
     <>
       <Navbar />
+      <Billboard />
+      <div className="pb-40">
+        <MovieList title="Popular on Netflix" data={movies} />
+
+      </div>
     </>
   )
 }
