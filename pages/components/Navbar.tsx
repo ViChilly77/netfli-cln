@@ -3,6 +3,7 @@
  import { useCallback, useEffect, useState } from "react";
  import {BsBell, BsChevronDown, BsSearch} from "react-icons/bs";
  import AccountMenu from "./AccountMenu";
+ import Search from "./Search";
  
 //  Defines the vertical offset at which the navbar background should appear
  const TOP_OFFSET = 66;
@@ -12,6 +13,7 @@
     const [showMobileMenu, setIsMobileMenuOpen] = useState(false);
     const [showAccountMenu, setIsAccountMenuOpen] = useState(false);
     const [showBackground, setShowBackground] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
 
     // useEffect hook to add a scroll event listener that toggles the navbar background based on the scroll position
     useEffect(() => {
@@ -78,8 +80,10 @@
                     <MobileMenu visible={showMobileMenu} />
                 </div>
                 <div className="flex flex-row ml-auto gap-7 items-center">
-                    <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
-                        <BsSearch />                    
+                    <div
+                        onClick={() => setShowSearch(true)}
+                        className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
+                        <BsSearch />
                     </div>
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
                         <BsBell />                    
@@ -93,6 +97,10 @@
                     </div>
                 </div>
             </div>
+            <Search
+                    visible={showSearch}
+                    onClose={() => setShowSearch(false)}
+                />
             </nav>
     )
  }
